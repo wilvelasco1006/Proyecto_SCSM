@@ -17,9 +17,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+# Definición de las rutas URL para la aplicación
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', include('ProyectoSCSMApp.urls')),
-    path('accounts/', include('django.contrib.auth.urls')),  
+    path('admin/', admin.site.urls),  # Ruta para el panel de administración
+    path('', include('ProyectoSCSMApp.urls')), # Incluye las URLs de la app
+    path('accounts/', include('django.contrib.auth.urls')),  # Rutas de autenticación
 ]
 
