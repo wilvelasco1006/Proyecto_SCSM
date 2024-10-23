@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+# Construye rutas dentro del proyecto como BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
@@ -20,16 +21,17 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
+# Configuración de seguridad
 SECRET_KEY = 'django-insecure-74%y^z%07(blzjnstez@f(1(x0(l=4a_p1)9276pba(ti8veot'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = True  # No usar en producción
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [] # Aquí se especificarían los dominios permitidos
 
 
 # Application definition
-
+# Definición de aplicaciones instaladas
 INSTALLED_APPS = [
     'crispy_forms',
     'crispy_bootstrap5',
@@ -41,10 +43,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'ProyectoSCSMApp',
 ]
-CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 
+# Configuración de Crispy Forms
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
 
+# Configuración del middleware
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -55,8 +59,10 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+# Configuración de URLs raíz
 ROOT_URLCONF = 'ProyectoSCSM.urls'
 
+# Configuración de plantillas
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -73,12 +79,13 @@ TEMPLATES = [
     },
 ]
 
+# Aplicación WSGI para la compatibilidad con servidores WSGI
 WSGI_APPLICATION = 'ProyectoSCSM.wsgi.application'
 
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
-
+# Configuración de la base de datos
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -89,7 +96,7 @@ DATABASES = {
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
-
+# Validación de contraseñas
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -108,10 +115,10 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
+# Configuración de internacionalización
+LANGUAGE_CODE = 'es' #idioma
 
-LANGUAGE_CODE = 'es'
-
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'UTC' #zona horaria
 
 USE_I18N = True
 
@@ -120,13 +127,14 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
-
-STATIC_URL = 'static/'
+# Archivos estáticos (CSS, JavaScript, Imágenes)
+STATIC_URL = 'static/' # URL para acceder a archivos estáticos
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
-
+# Tipo de campo de clave primaria por defecto
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
 # variables de redireccion de login y logout
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
