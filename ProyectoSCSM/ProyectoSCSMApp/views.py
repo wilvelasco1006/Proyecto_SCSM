@@ -3,7 +3,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from .forms import CustomUserCreationForm
 from django.contrib.auth import authenticate, login
-
+from .forms import ProveedorForm, CafeForm
+from .models import Proveedor
 def home(request):
     return render(request, 'home.html')  # Renderiza la plantilla de inicio
 
@@ -32,3 +33,23 @@ def register(request):
             return redirect('home')  # Redirige a la página de inicio
 
     return render(request, 'registration/register.html', data)  # Renderiza la plantilla de registro
+
+def registrar_proveedor(request):
+    if request.method == "POST":
+        form = ProveedorForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('home')  # Redirige a la página de inicio después de guardar
+    else:
+        form = ProveedorForm()
+    return render(request, 'registrar_proveedor.html', {'form': form})
+
+def registrar_cafe(request):
+    if request.method == "POST":
+        form = CafeForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('home')  # Redirige a la página de inicio después de guardar
+    else:
+        form = CafeForm()
+    return render(request, 'registrar_cafe.html', {'form': form})

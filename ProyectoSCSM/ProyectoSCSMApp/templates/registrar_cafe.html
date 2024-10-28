@@ -1,0 +1,27 @@
+<!-- registrar_cafe.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Registrar Café</h2>
+  <form method="post">
+    {% csrf_token %}
+    <div class="form-group">
+      <label for="fecha_compra">Fecha de Compra(dd/mm/aaaa):</label>
+      {{ form.fecha_compra }}
+    </div>
+    <div class="form-group">
+      <label for="cantidad">Cantidad(kg):</label>
+      {{ form.cantidad }}
+    </div>
+    <div class="form-group">
+      <label for="precio">Precio:</label>
+      {{ form.precio }}
+    </div>
+    <div class="form-group">
+      <label for="datos_proveedor">Datos del Proveedor:</label>
+      {{ form.datos_proveedor }}
+    </div>
+    <button type="submit" class="btn btn-primary">Guardar</button>
+  </form>
+{% endblock %}
+
