@@ -7,8 +7,7 @@ from django.db import models
 class Persona(models.Model):
     nombre = models.CharField(max_length=100)
     cedula = models.CharField(max_length=50, unique=True)
-    email = models.EmailField()
-    direccion = models.TextField()
+    #se eliminaron los atributos de email y direccion y se añadieron a Cliente
     num_contacto = models.CharField(max_length=20)
 
     class Meta:
@@ -24,6 +23,10 @@ class Proveedor(Persona):
         pass
 
 class Cliente(Persona):
+    #se añaden nuevos atributos
+    direccion = models.TextField()
+    email = models.EmailField()
+
     def registrar_cliente(self):
         # Aquí iría la lógica de registro del cliente, si es necesario.
         pass
