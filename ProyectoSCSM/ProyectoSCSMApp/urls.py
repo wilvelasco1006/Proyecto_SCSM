@@ -10,5 +10,6 @@ urlpatterns = [
     path('register/', register, name= 'register'), #Ruta para registrarse
     path('registrar_proveedor/', views.registrar_proveedor, name='registrar_proveedor'),#ruta del registro de proveedor
     path('registrar_cafe/', views.registrar_cafe, name='registrar_cafe'),#ruta de registro de cafe
+    path('registrar_cliente/', views.registrar_cliente, name='registrar_cliente'), #ruta para el registro del cliente
 
 ]

@@ -2,26 +2,52 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<div class="container mt-5">
   <h2>Registrar Café</h2>
-  <form method="post">
+  
+  {% if messages %}
+    <div class="alert alert-success">
+      {% for message in messages %}
+        {{ message }}
+      {% endfor %}
+    </div>
+  {% endif %}
+  
+  {% if form.errors %}
+    <div class="alert alert-danger">
+      <ul>
+        {% for field in form %}
+          {% for error in field.errors %}
+            <li>{{ error }}</li>
+          {% endfor %}
+        {% endfor %}
+        {% for error in form.non_field_errors %}
+          <li>{{ error }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endif %}
+  
+  <form method="post" class="border p-4 rounded shadow-sm">
     {% csrf_token %}
     <div class="form-group">
-      <label for="fecha_compra">Fecha de Compra(dd/mm/aaaa):</label>
-      {{ form.fecha_compra }}
+      <label for="{{ form.fecha_compra.id_for_label }}">Fecha de Compra:</label>
+      {{ form.fecha_compra }} <!-- Campo para la fecha de compra -->
     </div>
     <div class="form-group">
-      <label for="cantidad">Cantidad(kg):</label>
-      {{ form.cantidad }}
+      <label for="{{ form.cantidad.id_for_label }}">Cantidad (kg):</label>
+      {{ form.cantidad }} <!-- Campo para la cantidad -->
     </div>
     <div class="form-group">
-      <label for="precio">Precio:</label>
-      {{ form.precio }}
+      <label for="{{ form.precio.id_for_label }}">Precio (en pesos):</label>
+      {{ form.precio }} <!-- Campo para el precio -->
+      <small class="form-text text-muted">Ejemplos: 3000 35000 3560000</small> <!-- Ejemplo de formato -->
     </div>
     <div class="form-group">
-      <label for="datos_proveedor">Datos del Proveedor:</label>
-      {{ form.datos_proveedor }}
+      <label for="{{ form.datos_proveedor.id_for_label }}">Datos del Proveedor:</label>
+      {{ form.datos_proveedor }} <!-- Campo para datos del proveedor -->
     </div>
     <button type="submit" class="btn btn-primary">Guardar</button>
   </form>
+</div>
 {% endblock %}
-

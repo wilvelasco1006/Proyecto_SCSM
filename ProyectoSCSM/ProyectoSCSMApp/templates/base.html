@@ -10,32 +10,36 @@
         /* Estilos para la barra lateral */
         .sidebar {
             height: 100vh;
-            width: 150px;
+            width: 180px;
             position: fixed;
             top: 0;
             left: 0;
-            background-color: #333;
-            padding-top: 20px;
-            padding-top: 60px; /* Deja espacio para el navbar */
+            background-color: #2c3e50;
+            padding-top: 60px;
+            box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s;
         }
 
         .sidebar a {
-            padding: 10px;
+            padding: 12px 20px;
             text-decoration: none;
-            font-size: 18px;
-            color: white;
+            font-size: 16px;
+            color: #ecf0f1;
             display: block;
+            transition: background-color 0.3s, padding-left 0.3s;
         }
 
         .sidebar a:hover {
-            background-color: #575757;
+            background-color: #34495e;
+            padding-left: 25px;
         }
 
         /* Estilo para el contenido principal al lado de la barra lateral */
         .content {
-            margin-top: 70px; /* Espacio debajo del navbar */
-            margin-left: 180px; /* Espacio para la barra lateral */
+            margin-top: 70px;
+            margin-left: 200px;
             padding: 20px;
+            color: #2c3e50;
         }
 
         /* Estilos para la barra de navegación fija en la parte superior */
@@ -45,11 +49,38 @@
             left: 0;
             width: 100%;
             z-index: 1030;
+            background-color: #ecf0f1;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Estilos del navbar */
+        .navbar-brand, .navbar-nav .nav-link {
+            color: #2c3e50 !important;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: #2980b9 !important;
         }
 
         /* Centra los elementos del navbar */
         .navbar-nav {
             margin: 0 auto;
+        }
+
+        /* Estilo para el título de la página */
+        h3 {
+            font-weight: bold;
+            color: #2c3e50;
+            border-bottom: 2px solid #2980b9;
+            padding-bottom: 5px;
+            display: inline-block;
+            margin-top: 20px;
+        }
+
+        /* Estilo de bienvenida */
+        h4 {
+            color: #2980b9;
+            font-weight: 500;
         }
     </style>
 </head>
@@ -58,7 +89,7 @@
 
     <div class="container-fluid">
         <!-- Barra de navegación superior -->
-        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <nav class="navbar navbar-expand-lg">
             <div class="container-fluid">
                 <a class="navbar-brand" href={% url 'home' %}>ProyectoSCSM</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -91,19 +122,18 @@
         {% if request.user.is_authenticated %}
         <div class="sidebar">
             <a href={% url 'home' %}>Inicio</a>
-            <a href={% url 'registrar_proveedor' %}>Proveedores</a>
-            <a href={% url 'registrar_cafe' %}>Registrar Café</a>
-            {% if request.user.is_staff %}  <!-- Verifica si el usuario es un administrador -->
-            <a href="/admin/">Panel de Administración</a>  <!-- Solo visible para administradores -->
+            <a href={% url 'registrar_proveedor' %}>Registrar Proveedor</a>
+            <a href={% url 'registrar_cliente' %}>Registrar Cliente</a>
+            <a href={% url 'registrar_cafe' %}>Registrar Compra de Café</a>
+            {% if request.user.is_staff %}
+            <a href="/admin/">Panel de Administración</a>
             {% endif %}
-            <!-- Agrega más enlaces según los módulos -->
             <a href={% url 'exit' %}>Cerrar Sesión</a>
         </div>
         {% endif %}
 
         <!-- Contenido principal -->
         <div class="content">
-            <h2>Inicio</h2>
             {% block content %}{% endblock %}
         </div>
 
@@ -113,4 +143,5 @@
 </body>
 
 </html>
+
 

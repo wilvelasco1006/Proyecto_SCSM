@@ -1,9 +1,9 @@
-<!-- registrar_proveedor.html -->
+<!-- registrar_cliente.html -->
 {% extends 'base.html' %}
 
 {% block content %}
 <div class="container mt-5">
-  <h2>Registrar Proveedor</h2>
+  <h2>Registrar Cliente</h2>
   
   {% if messages %}
     <div class="alert alert-success">
@@ -30,17 +30,25 @@
   
   <form method="post" class="border p-4 rounded shadow-sm">
     {% csrf_token %}
-    <div class="form-group">
+    <div class="form-group mb-3">
       <label for="{{ form.nombre.id_for_label }}">Nombre:</label>
-      {{ form.nombre }} <!-- Campo para el nombre del proveedor -->
+      {{ form.nombre }}
     </div>
-    <div class="form-group">
+    <div class="form-group mb-3">
       <label for="{{ form.cedula.id_for_label }}">Cédula:</label>
-      {{ form.cedula }} <!-- Campo para la cédula del proveedor -->
+      {{ form.cedula }}
     </div>
-    <div class="form-group">
+    <div class="form-group mb-3">
       <label for="{{ form.num_contacto.id_for_label }}">Número de Contacto:</label>
-      {{ form.num_contacto }} <!-- Campo para el número de contacto -->
+      {{ form.num_contacto }}
+    </div>
+    <div class="form-group mb-3">
+      <label for="{{ form.email.id_for_label }}">Email:</label>
+      {{ form.email }}
+    </div>
+    <div class="form-group mb-3">
+      <label for="{{ form.direccion.id_for_label }}">Dirección:</label>
+      {{ form.direccion }}
     </div>
     <button type="submit" class="btn btn-primary">Guardar</button>
   </form>

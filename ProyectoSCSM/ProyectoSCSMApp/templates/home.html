@@ -1,18 +1,13 @@
-{%extends 'base.html'%}
+{% extends 'base.html' %}
 
-
-{%block content%}
-<h3>Inicio</h3>
+{% block content %}
+<h3>INICIO</h3>
 <hr>
-{% if request.user.is_authenticated%}
+{% if request.user.is_authenticated %}
 <h4>
-    {{ user.username | upper }}, bienvenido
-    
+    Bienvenido, {{ user.username | upper }}
 </h4>
-
-{%endif %}
-
-
-
-
-{%endblock%}
+{% else %}
+<p class="text-muted">Por favor, ingresa para acceder a las funcionalidades de la aplicación.</p>
+{% endif %}
+{% endblock %}
