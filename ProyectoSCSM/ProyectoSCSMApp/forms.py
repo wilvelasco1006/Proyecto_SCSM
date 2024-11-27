@@ -20,18 +20,25 @@ class CustomUserCreationForm(UserCreationForm):
 class ProveedorForm(forms.ModelForm):
     class Meta:
         model = Proveedor
-        fields = ['nombre', 'cedula', 'num_contacto']
+        fields = ['nombres','apellidos', 'cedula', 'num_contacto']
         widgets = {
-            'nombre': forms.TextInput(attrs={'class': 'form-control'}),
+            'nombres': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'tu segundo nombre es opcional'}),
+            'apellidos': forms.TextInput(attrs={'class': 'form-control','placeholder': 'tu segundo apellido es opcional'}),
             'cedula': forms.TextInput(attrs={'class': 'form-control'}),
             'num_contacto': forms.TextInput(attrs={'class': 'form-control'}),
         }
     # Función para validar que el nombre no sea un número
-    def clean_nombre(self):
-        nombre = self.cleaned_data.get("nombre")
-        if any(char.isdigit() for char in nombre):
-            raise forms.ValidationError("El nombre no debe contener números.")
-        return nombre
+    def clean_nombres(self):
+        nombres = self.cleaned_data.get("nombres")
+        if any(char.isdigit() for char in nombres):
+            raise forms.ValidationError("Los nombres no deben contener números.")
+        return nombres
+    # Validación para que los apellidos no contengan números
+    def clean_apellidos(self):
+        apellidos = self.cleaned_data.get("apellidos")
+        if any(char.isdigit() for char in apellidos):
+            raise forms.ValidationError("Los apellidos no deben contener números.")
+        return apellidos
 
     # Función para que la cédula sea un valor positivo
     def clean_cedula(self):
@@ -63,40 +70,28 @@ class CafeForm(forms.ModelForm):
         widgets = {
             'fecha_compra': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
             'cantidad': forms.NumberInput(attrs={'class': 'form-control'}),
-            'precio': forms.TextInput(attrs={'class': 'form-control', 'placeholder': '000000'}),
+            'precio': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': '000000'}),
             'datos_proveedor': forms.Select(attrs={'class': 'form-control'}),
         }
     #funcion para validar que en el formulario no admita negativos en el campo cantidad
     def clean_cantidad(self):
         cantidad = self.cleaned_data.get("cantidad")
         if cantidad<=0:
-            raise forms.ValidationError("La cantidad debe ser una valor positivo")
+            raise forms.ValidationError("La cantidad debe ser una valor positivo mayor a 0")
         return cantidad
     
     def clean_precio(self):
         precio = self.cleaned_data.get("precio")
-
-    # Comprobar si el precio es None o vacío
-        if precio:
-        # Primero, aseguramos que el precio se trata como una cadena
-            precio_str = str(precio)
-
-        # Validar que no contenga comas ni puntos
-            if '.' in precio_str or ',' in precio_str:
-                raise forms.ValidationError("No se permiten puntos ni comas en el número.")
-
-            try:
-            # Convertir el precio a Decimal
-                precio_float = Decimal(precio_str)
-                if precio_float <= 0:
-                    raise forms.ValidationError("El precio debe ser un valor positivo.")
-            except (ValueError, InvalidOperation):
-                raise forms.ValidationError("Por favor, ingrese un número válido en el formato correcto.")
-
-            return precio_float  # Retornar el precio convertido a Decimal
-
-    # Si no hay precio, retornar None
-        return None
+        try:
+        # Convertir precio a entero
+            precio_int = int(precio)
+            if precio_int <= 0:
+                raise forms.ValidationError("El precio debe ser un valor entero positivo.")
+        except ValueError:
+            raise forms.ValidationError("Por favor, ingrese un número válido sin puntos ni comas.")
+    
+    # Devuelve el valor limpio como 'precio' en lugar de 'precio_int' para mantener consistencia
+        return precio_int
 
         
     
@@ -105,26 +100,33 @@ class CafeForm(forms.ModelForm):
 class ClienteForm(forms.ModelForm):
     class Meta:
         model = Cliente
-        fields = ['nombre', 'cedula', 'email', 'direccion', 'num_contacto']
+        fields = ['nombres','apellidos', 'cedula', 'email', 'direccion', 'num_contacto']
         widgets = {
-            'nombre': forms.TextInput(attrs={'class': 'form-control'}),
+            'nombres': forms.TextInput(attrs={'class': 'form-control','placeholder': 'tu segundo nombre es opcional'}),
+            'apellidos': forms.TextInput(attrs={'class': 'form-control','placeholder': 'tu segundo apellido es opcional'}),
             'cedula': forms.TextInput(attrs={'class': 'form-control'}),
             'num_contacto': forms.TextInput(attrs={'class': 'form-control'}),
             'email': forms.EmailInput(attrs={'class': 'form-control'}),
             'direccion': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
         }
     # Validación para que el nombre no contenga números
-    def clean_nombre(self):
-        nombre = self.cleaned_data.get("nombre")
-        if any(char.isdigit() for char in nombre):
-            raise forms.ValidationError("El nombre no debe contener números.")
-        return nombre
+    def clean_nombres(self):
+        nombres = self.cleaned_data.get("nombres")
+        if any(char.isdigit() for char in nombres):
+            raise forms.ValidationError("Los nombres no deben contener números.")
+        return nombres
+    
+    def clean_apellidos(self):
+        apellidos = self.cleaned_data.get("apellidos")
+        if any(char.isdigit() for char in apellidos):
+            raise forms.ValidationError("Los apellidos no deben contener números.")
+        return apellidos
 
     # Validación para que la cédula sea un valor positivo y no contenga letras
     def clean_cedula(self):
         cedula = self.cleaned_data.get("cedula")
         if not cedula.isdigit():
-            raise forms.ValidationError("La cédula debe contener solo números positivos.")
+            raise forms.ValidationError("La cédula debe contener solo números positivos y sin letras.")
         if int(cedula) <= 0 or len(cedula) < 6 or len(cedula) > 10:
             raise forms.ValidationError("La cédula debe ser un valor positivo entre 6 y 10 dígitos.")
         if cedula[0] == '0':

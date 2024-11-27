@@ -5,7 +5,9 @@ import locale
 
 
 class Persona(models.Model):
-    nombre = models.CharField(max_length=100)
+    # Se dividen en nombres y apellidos
+    nombres = models.CharField(max_length=100)
+    apellidos = models.CharField(max_length=100)
     cedula = models.CharField(max_length=50, unique=True)
     #se eliminaron los atributos de email y direccion y se añadieron a Cliente
     num_contacto = models.CharField(max_length=20)
@@ -14,7 +16,8 @@ class Persona(models.Model):
         abstract = True  # Define que es una clase abstracta
 
     def __str__(self):
-        return self.nombre
+        # Representar como "Nombres Apellidos"
+        return f"{self.nombres} {self.apellidos}"
 
 class Proveedor(Persona):
     # No es necesario añadir más campos, ya que hereda de Persona
@@ -34,7 +37,7 @@ class Cliente(Persona):
 class Cafe(models.Model):
     fecha_compra = models.DateField()
     cantidad = models.FloatField()
-    precio = models.DecimalField(max_digits=15, decimal_places=1)  # Permitir hasta 11 dígitos antes del punto y 3 después
+    precio = models.IntegerField()
     datos_proveedor = models.ForeignKey(Proveedor, on_delete=models.CASCADE, related_name="cafe")
 
     def __str__(self):

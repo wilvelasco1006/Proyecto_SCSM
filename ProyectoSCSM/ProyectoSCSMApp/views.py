@@ -34,7 +34,7 @@ def register(request):
             return redirect('home')  # Redirige a la página de inicio
 
     return render(request, 'registration/register.html', data)  # Renderiza la plantilla de registro
-
+@login_required
 def registrar_proveedor(request):
     if request.method == "POST":
         form = ProveedorForm(request.POST)
@@ -45,7 +45,7 @@ def registrar_proveedor(request):
     else:
         form = ProveedorForm()
     return render(request, 'registrar_proveedor.html', {'form': form})
-
+@login_required
 def registrar_cafe(request):
     if request.method == "POST":
         form = CafeForm(request.POST)
@@ -56,7 +56,7 @@ def registrar_cafe(request):
     else:
         form = CafeForm()
     return render(request, 'registrar_cafe.html', {'form': form})
-
+@login_required
 def registrar_cliente(request):
     if request.method == "POST":
         form = ClienteForm(request.POST)
