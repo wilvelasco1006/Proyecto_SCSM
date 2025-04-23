@@ -20,7 +20,9 @@ from django.urls import path, include
 # Definición de las rutas URL para la aplicación
 urlpatterns = [
     path('admin/', admin.site.urls),  # Ruta para el panel de administración
-    path('', include('ProyectoSCSMApp.urls')), # Incluye las URLs de la app
+    path('', include('apps.base.urls')),  # Ruta para la página de inicio (home)
+    path('clientes/', include('apps.clientes.urls')),  # Rutas de la app clientes
+    path('proveedores/', include('apps.proveedores.urls')),  # Rutas de la app proveedores
+    path('cafe/', include('apps.cafe.urls')),  # Rutas de la app cafe
     path('accounts/', include('django.contrib.auth.urls')),  # Rutas de autenticación
 ]
-

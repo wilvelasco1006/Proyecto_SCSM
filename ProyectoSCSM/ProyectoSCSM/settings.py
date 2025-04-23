@@ -9,12 +9,13 @@ https://docs.djangoproject.com/en/5.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
-
+import sys
 from pathlib import Path
 
+BASE_DIR = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(BASE_DIR / 'apps'))
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 # Construye rutas dentro del proyecto como BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 # Quick-start development settings - unsuitable for production
@@ -41,7 +42,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'ProyectoSCSMApp',
+    'apps.base',  # Aplicación base para código compartido
+    'apps.clientes',
+    'apps.proveedores',
+    'apps.cafe',
+    
 ]
 
 # Configuración de Crispy Forms
@@ -88,8 +93,13 @@ WSGI_APPLICATION = 'ProyectoSCSM.wsgi.application'
 # Configuración de la base de datos
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',  # Cambia a 'django.db.backends.postgresql' para PostgreSQL
+        'NAME': 'db_scsm',  # Cambia esto por el nombre de tu base de datos
+        'USER': 'scsm_user',  # Cambia esto por tu usuario de base de datos
+        'PASSWORD': 'yuli4n',  # Cambia esto por tu contraseña de base de datos
+        'HOST': 'localhost',  # Cambia esto si tu base de datos está en otro host
+        'PORT': '5432',  # Cambia esto si tu base de datos está en otro puerto
+        
     }
 }
 

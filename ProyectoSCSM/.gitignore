@@ -1,0 +1,40 @@
+# Sistema
+__pycache__/
+*.py[cod]
+*.sqlite3
+
+# Entorno virtual
+env/
+venv/
+ENV/
+VENV/
+
+# Configuración local y del entorno
+*.env
+*.local
+.DS_Store
+
+# VS Code
+.vscode/
+*.code-workspace
+
+# Archivos de migraciones
+**/migrations/
+!**/migrations/__init__.py
+
+# Archivos estáticos
+/static/
+
+# Backups y dumps de PostgreSQL
+*.pgsql
+*.pg_dump
+
+# Archivos de log y temporales
+*.log
+*.bak
+*.tmp
+
+# Cobertura de tests y caché de pytest
+htmlcov/
+.coverage
+.pytest_cache/
