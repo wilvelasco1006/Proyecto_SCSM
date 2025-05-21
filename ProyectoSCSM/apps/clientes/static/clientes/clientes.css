@@ -1,0 +1,22 @@
+/* Estilo para la tabla 
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table th, table td {
+    text-align: left;
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+
+table th {
+    background-color: #f4f4f4;
+}
+
+/* Botones 
+.btn {
+    margin-right: 5px;
+}
+*/

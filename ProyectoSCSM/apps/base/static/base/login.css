@@ -1,0 +1,38 @@
+/* Centrar todo el contenedor en pantalla */
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Toda la altura del viewport */
+    background-color: #f8f9fa; /* Fondo claro (opcional) */
+    padding: 20px;
+}
+
+/* Estilo de la tarjeta de login */
+.login-card {
+    width: 100%;
+    max-width: 400px; /* Controla el tamaño máximo */
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    background-color: white;
+}
+
+/* Logo dentro del login */
+.login-logo {
+    display: block;
+    margin: 0 auto 20px auto;
+    max-height: 100px;
+    border-radius: 10px;
+}
+
+/* Inputs modernos */
+input.form-control {
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-size: 15px;
+    border: 1px solid #ccc;
+    transition: all 0.3s ease;
+}
+
+

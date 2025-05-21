@@ -1,0 +1,496 @@
+:root {
+    --taza-cafe: #4e493e;
+    /* Color taza y "café" */
+    --taza-blanco: #f2f7f2;
+    /* Color taza claro */
+    --humo-cafe: #daa749;
+    /* Color humo */
+    --salvajina-green: #4aab87;
+    /* Color "Salvajina" */
+    --navbar-height: 80px; /* Variable para la altura del navbar */
+}
+
+body {
+    background-color: var(--taza-blanco);
+    color: var(--taza-cafe);
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    /* Asegura altura mínima para contenido corto */
+}
+
+body.sidebar-expanded .content {
+    margin-left: 250px;
+}
+
+/* Estilos para la barra lateral */
+.sidebar {
+    height: calc(100vh - var(--navbar-height));
+    width: 250px;
+    position: fixed;
+    top: var(--navbar-height);/* Usa la variable en vez de un valor fijo */
+    left: 0;
+    background-color: var(--taza-cafe);
+    padding-top: 20px;
+    box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s;
+    transform: translateX(-100%);
+    z-index: 1040;
+    /* Bordes redondeados solo en el lado derecho */
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+    /* Para garantizar que no quede ningún espacio entre el sidebar y el borde izquierdo */
+    margin-left: 0;
+    overflow-y: auto; /* Permite desplazamiento si el contenido es muy largo */
+}
+
+
+.sidebar.show {
+    transform: translateX(0);
+}
+
+.sidebar-header {
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.sidebar a {
+    padding: 12px 20px;
+    text-decoration: none;
+    font-size: 16px;
+    color: var(--taza-blanco);
+    display: block;
+    transition: background-color 0.3s, padding-left 0.3s;
+}
+
+.sidebar a:hover {
+    background-color: var(--salvajina-green);
+    padding-left: 25px;
+    color: var(--taza-blanco);
+}
+
+.sidebar nav a i {
+    width: 20px;
+    text-align: center;
+}
+
+.sidebar-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1030;
+    display: none;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.sidebar-overlay.show {
+    opacity: 1;
+    display: block;
+}
+
+/* Color para el Menú Principal */
+.text-menu {
+    color: var(--humo-cafe) !important;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    margin-bottom: 0;
+}
+
+/* Ajustar icono de 3 puntos */
+#sidebarToggle i.fa-ellipsis-v {
+    color: var(--salvajina-green);
+    font-size: 1.5rem;
+}
+
+/* Estilo para el contenido principal al lado de la barra lateral */
+.content {
+    flex: 1;
+    margin-top: var(--navbar-height); /* Navbar + un poco de espacio */
+    margin-left: 0;
+    margin-bottom: 60px;
+    padding: 20px;
+    color: var(--taza-cafe);
+    transition: margin-left 0.3s;
+}
+
+.content-full {
+    margin-left: 0 !important;
+}
+
+/* Estilos para la barra de navegación fija en la parte superior */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: var(--navbar-height);
+    width: 100%;
+    z-index: 1050;
+    background-color: var(--taza-blanco);
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+#sidebarToggle {
+    background: none;
+    border: none;
+    font-size: 1.25rem;
+    color: var(--taza-cafe);
+    cursor: pointer;
+}
+
+/* Estilos del navbar */
+.navbar-brand,
+.navbar-nav .nav-link {
+    color: var(--salvajina-green) !important;
+    font-weight: 500;
+}
+
+.navbar-brand {
+    display: flex;
+    align-items: center;
+}
+
+.navbar-brand span {
+    font-weight: 700;
+    color: var(--taza-cafe);
+    margin-left: 10px;
+}
+
+.navbar-brand img {
+    height: 50px;
+    width: auto;
+    margin-right: 10px;
+    border-radius: 5px;
+}
+
+.navbar-nav .nav-link:hover {
+    color: var(--humo-cafe) !important;
+}
+
+/* Estilo para el título de la página */
+h3 {
+    font-weight: bold;
+    color: var(--taza-cafe);
+    border-bottom: 2px solid var(--salvajina-green);
+    padding-bottom: 5px;
+    display: inline-block;
+    margin-top: 20px;
+}
+
+/* Estilo de bienvenida */
+h4 {
+    color: var(--salvajina-green);
+    font-weight: 500;
+}
+
+/* Estilos para botones */
+.btn-primary {
+    background-color: var(--salvajina-green);
+    border-color: var(--salvajina-green);
+}
+
+.btn-primary:hover {
+    background-color: #3d9174;
+    border-color: #3d9174;
+}
+
+.btn-secondary {
+    background-color: var(--taza-cafe);
+    border-color: var(--taza-cafe);
+}
+
+.btn-secondary:hover {
+    background-color: #3d3b34;
+    border-color: #3d3b34;
+}
+
+/* Estilos para tablas */
+table {
+    border-color: var(--salvajina-green);
+}
+
+.table th {
+    background-color: var(--salvajina-green);
+    color: var(--taza-blanco);
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(74, 171, 135, 0.1);
+}
+
+/* Estilos para formularios */
+.form-control:focus {
+    border-color: var(--salvajina-green);
+    box-shadow: 0 0 0 0.2rem rgba(74, 171, 135, 0.25);
+}
+
+/* Estilos adicionales para la estructura semántica */
+main {
+    min-height: 80vh;
+}
+
+section {
+    margin-bottom: 2rem;
+    padding: 1rem;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+/* Footer que cubra todo el ancho */
+footer {
+    background-color: var(--taza-cafe);
+    color: var(--taza-blanco);
+    width: 100%;
+    padding: 15px 0;
+    margin-top: auto;
+    z-index: 1060;
+    left: 0;
+    right: 0;
+    position: relative;
+    box-sizing: border-box;
+    
+    /* Elimina cualquier margen que pueda crear espacios */
+    margin-left: 0;
+    margin-right: 0;
+}
+body > .container-fluid {
+    padding-left: 0;
+    padding-right: 0;
+    overflow-x: hidden; /* Evita scroll horizontal */
+}
+/* Estilo para el logo */
+#logo {
+    height: 80px;
+    width: auto;
+    border: 2px solid var(--taza-blanco);
+    border-radius: 5px;
+}
+
+/* Estilos para alertas y mensajes */
+.alert-success {
+    background-color: var(--salvajina-green);
+    color: var(--taza-blanco);
+    border-color: #3d9174;
+}
+
+.alert-warning {
+    background-color: var(--humo-cafe);
+    color: var(--taza-cafe);
+    border-color: #c29642;
+}
+
+/* Estilos para tarjetas/cards */
+.card {
+    border-color: var(--salvajina-green);
+}
+
+.card-header {
+    background-color: var(--salvajina-green);
+    color: var(--taza-blanco);
+}
+
+/* Estilos actualizados para mejor experiencia de usuario */
+
+/* Home page styles */
+.home-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+.welcome-banner {
+    padding: 1.5rem;
+    background-color: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    border-left: 5px solid var(--salvajina-green);
+    margin-bottom: 2rem;
+}
+
+.welcome-banner h3 {
+    border-bottom: none;
+    color: var(--salvajina-green);
+    margin-top: 0;
+}
+
+.feature-card {
+    background-color: white;
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    height: 100%;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+.feature-card h5 {
+    color: var(--taza-cafe);
+    margin-bottom: 1rem;
+}
+
+/* Login page styles */
+.login-container {
+    max-width: 450px;
+    margin: 2rem auto;
+}
+
+.login-card {
+    border: none;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+.login-card .card-header {
+    background-color: var(--salvajina-green);
+    color: white;
+    padding: 1rem;
+    border-bottom: none;
+}
+
+.login-card .card-header h3 {
+    border-bottom: none;
+    color: white;
+    margin: 0;
+}
+
+.login-logo {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--humo-cafe);
+}
+
+/* Responsive adjustments */
+@media (min-width: 992px) {
+    .sidebar {
+        transform: translateX(0);
+    }
+
+    .content {
+        margin-left: 250px;
+    }
+
+    #sidebarToggle {
+        display: none;
+    }
+}
+
+@media (max-width: 991.98px) {
+    body.sidebar-expanded .sidebar {
+        transform: translateX(0);
+    }
+
+    body.sidebar-expanded .content {
+        margin-left: 0;
+    }
+
+    .navbar-brand span {
+        display: none;
+    }
+
+    #logo {
+        height: 40px;
+    }
+
+    .welcome-banner {
+        padding: 1rem;
+    }
+
+    .feature-card {
+        margin-bottom: 1rem;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .login-container {
+        width: 100%;
+        padding: 0 1rem;
+    }
+
+    .welcome-banner h3 {
+        font-size: 1.5rem;
+    }
+}
+/* Mejoras para el menú hamburguesa en pantallas pequeñas */
+@media (max-width: 991.98px) {
+    /* Contenedor del menú desplegable */
+    .navbar-collapse {
+        position: absolute;
+        top: var(--navbar-height);
+        right: 0;
+        width: 250px;
+        background-color: var(--taza-blanco);
+        border-left: 1px solid rgba(0,0,0,0.1);
+        border-bottom: 1px solid rgba(0,0,0,0.1);
+        box-shadow: -2px 2px 5px rgba(0,0,0,0.1);
+        padding: 1rem;
+        z-index: 1049;
+        border-bottom-left-radius: 8px;
+    }
+    
+    /* Mejorar apariencia de los elementos del menú */
+    .navbar-nav {
+        width: 100%;
+    }
+    
+    .navbar-nav .nav-item {
+        margin-bottom: 5px;
+    }
+    
+    .navbar-nav .nav-link {
+        padding: 8px 15px;
+        border-radius: 4px;
+        transition: background-color 0.2s;
+    }
+    
+    .navbar-nav .nav-link:hover {
+        background-color: rgba(74, 171, 135, 0.1);
+    }
+    
+    /* Botón hamburguesa más visible */
+    .navbar-toggler {
+        border: none;
+        color: var(--salvajina-green) !important;
+        padding: 8px;
+    }
+    
+    .navbar-toggler:focus {
+        box-shadow: none;
+        outline: none;
+    }
+    
+    /* Arreglar dropdown en móviles */
+    .dropdown-menu {
+        border: none;
+        background-color: rgba(0,0,0,0.03);
+        margin-top: 0;
+        padding-top: 0.5rem;
+        padding-bottom: 0.5rem;
+    }
+    
+    .dropdown-item {
+        padding: 8px 15px;
+        font-size: 0.95rem;
+    }
+    
+    /* Arreglar separación con el contenido */
+    .content {
+        margin-top: calc(var(--navbar-height) + 10px);
+    }
+}

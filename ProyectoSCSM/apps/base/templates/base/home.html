@@ -2,13 +2,50 @@
 
 
 {% block content %}
-<h3>INICIO</h3>
-<hr>
-{% if request.user.is_authenticated %}
-<h4>
-    Bienvenido, {{ user.username | upper }}
-</h4>
-{% else %}
-<p class="text-muted">Por favor, ingresa para acceder a las funcionalidades de la aplicación.</p>
-{% endif %}
+{% load static %}
+<div class="home-container">
+    {% if request.user.is_authenticated %}
+    <!-- Home para usuarios autenticados -->
+    <div class="welcome-banner mb-4">
+        <h3>Bienvenido a Salvajina Café</h3>
+        <h4 class="mb-3">Hola, {{ user.username | upper }}</h4>
+        <p class="lead">Accede rápidamente a las funcionalidades del sistema:</p>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="feature-card">
+                <h5>Gestión de Clientes</h5>
+                <p>Registra y administra la información de los clientes de Salvajina Café.</p>
+                <a href="{% url 'registrar_cliente' %}" class="btn btn-primary">Acceder</a>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="feature-card">
+                <h5>Proveedores</h5>
+                <p>Registra y administra tus proveedores de café para un mejor control.</p>
+                <a href="{% url 'registrar_proveedor' %}" class="btn btn-primary">Acceder</a>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="feature-card">
+                <h5>Compras de Café</h5>
+                <p>Registra y controla las compras de café realizadas a los proveedores.</p>
+                <a href="{% url 'registrar_cafe' %}" class="btn btn-primary">Acceder</a>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <!-- Home para usuarios no autenticados -->
+    <div class="text-center my-5">
+        <img src="{% static 'base/img/salvajina-cafe.jpg' %}" alt="Logo SCSM" class="img-fluid mb-4"
+            style="max-height: 150px; border-radius: 10px;">
+        <h1 class="display-5 mb-3">Salvajina Cafe Software Manager</h1>
+        <p class="lead mb-5">Bienvenido a SCSM, sistema de registro y seguimiento de procesos productivos de ASOMIPRAM.</p>
+        <a href="{% url 'login' %}" class="btn btn-lg btn-primary">
+            Ingresar al Sistema <i class="fas fa-sign-in-alt ms-2"></i>
+        </a>
+    </div>
+    {% endif %}
+</div>
 {% endblock %}

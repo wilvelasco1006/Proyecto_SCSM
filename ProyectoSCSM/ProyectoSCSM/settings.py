@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 import sys
 from pathlib import Path
+import os
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(BASE_DIR / 'apps'))
@@ -138,8 +139,12 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 # Archivos estáticos (CSS, JavaScript, Imágenes)
-STATIC_URL = 'static/' # URL para acceder a archivos estáticos
-
+STATIC_URL = '/static/' # URL para acceder a archivos estáticos
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'apps/base/static'),
+    # Añade aquí otras carpetas static si es necesario
+]
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 # Tipo de campo de clave primaria por defecto
