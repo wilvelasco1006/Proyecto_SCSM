@@ -19,3 +19,4 @@ class Cliente(Persona):
         """Sobrescribe delete(): marca is_active=False en lugar de borrar."""
         self.is_active = False
         self.save()
+        return self
