@@ -16,6 +16,7 @@ class Proveedor(Persona):
         """Sobrescribe delete(): marca is_active=False en lugar de borrar."""
         self.is_active = False
         self.save()
+        return self
     def __str__(self):
         """Devuelve una representación legible del proveedor."""
-        return f"{self.nombres} "
+        return f"{self.nombres} {self.apellidos}"

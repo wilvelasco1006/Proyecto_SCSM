@@ -1,0 +1,14 @@
+{% extends 'base/base.html'%}
+
+{% block content %}
+<div class="container mt-5">
+    <h3 class="text-center">Editar Proveedor</h3>
+    <hr>
+    <form method="post" class="border p-4 rounded shadow-sm">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+        <a href="{% url 'registrar_proveedor' %}" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>
+{% endblock %}

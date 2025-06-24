@@ -20,5 +20,6 @@ class Cafe(models.Model):
         """Sobrescribe delete(): marca is_active=False en lugar de borrar."""
         self.is_active = False
         self.save()
+        return self
     def __str__(self):
         return f"{self.cantidad} kg de café comprado el {self.fecha_compra} por {self.precio}"
