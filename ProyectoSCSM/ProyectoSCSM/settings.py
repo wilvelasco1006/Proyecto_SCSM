@@ -47,7 +47,8 @@ INSTALLED_APPS = [
     'apps.clientes',
     'apps.proveedores',
     'apps.cafe',
-    
+    'apps.procesos',  # Aplicación para procesos productivos
+
 ]
 
 # Configuración de Crispy Forms

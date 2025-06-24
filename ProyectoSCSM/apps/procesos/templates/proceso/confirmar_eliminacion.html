@@ -1,0 +1,23 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card border-danger">
+        <div class="card-header bg-danger text-white">
+            <h3 class="mb-0">Confirmar eliminación</h3>
+        </div>
+        <div class="card-body">
+            <p class="lead">¿Está seguro que desea eliminar el registro de {{ tipo }} del {{ proceso.fecha }} por {{ proceso.responsable }}?</p>
+            <p>Esta acción no eliminará los datos permanentemente pero los ocultará del sistema.</p>
+            
+            <form method="post" class="mt-4">
+                {% csrf_token %}
+                <div class="d-flex gap-2">
+                    <a href="{% url ruta_regreso %}" class="btn btn-secondary">Cancelar</a>
+                    <button type="submit" class="btn btn-danger">Confirmar eliminación</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

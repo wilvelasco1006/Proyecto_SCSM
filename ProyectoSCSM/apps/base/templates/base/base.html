@@ -78,7 +78,7 @@
                         </li>
                         {% endif %}
 
-                        
+
                     </ul>
                 </div>
             </div>
@@ -94,18 +94,43 @@
                 <button id="sidebarClose" class="btn-close d-lg-none"></button>
             </div>
             <nav>
-                <a href="{% url 'home' %}">
+                
+                <a href="{% url 'home' %}" class="{% if request.path == '/' or request.path == '/home/' %}active{% endif %}">
                     <i class="fas fa-home me-2"></i> Inicio
                 </a>
-                <a href="{% url 'registrar_proveedor' %}">
+                <a href="{% url 'registrar_proveedor' %}" class="{% if 'proveedor' in request.path %}active{% endif %}">
                     <i class="fas fa-truck me-2"></i> Proveedores
                 </a>
-                <a href="{% url 'registrar_cliente' %}">
+                <a href="{% url 'registrar_cliente' %}" class="{% if 'cliente' in request.path %}active{% endif %}">
                     <i class="fas fa-users me-2"></i> Clientes
                 </a>
-                <a href="{% url 'registrar_cafe' %}">
+                <a href="{% url 'registrar_cafe' %}" class="{% if 'cafe' in request.path and not 'procesos' in request.path %}active{% endif %}">
                     <i class="fas fa-coffee me-2"></i> Compras de Café
                 </a>
+
+                <!-- Menú desplegable para Procesos Productivos -->
+                <a href="#" class="proceso-dropdown" onclick="toggleProcesosMenu(event)">
+                    <i class="fas fa-industry me-2"></i> Procesos Productivos
+                    <i class="fas fa-chevron-down float-end mt-1 proceso-chevron"></i>
+                </a>
+                <div class="procesos-submenu" id="procesosSubmenu">
+                    <a href="{% url 'registrar_trillado' %}"
+                        class="submenu-item {% if 'trillado' in request.path %}active{% endif %}">
+                        <i class="fas fa-angle-right me-2"></i> Café Trillado
+                    </a>
+                    <a href="{% url 'registrar_tostado' %}"
+                        class="submenu-item {% if 'tostado' in request.path %}active{% endif %}">
+                        <i class="fas fa-angle-right me-2"></i> Café Tostado
+                    </a>
+                    <a href="{% url 'registrar_molido' %}"
+                        class="submenu-item {% if 'molido' in request.path %}active{% endif %}">
+                        <i class="fas fa-angle-right me-2"></i> Café Molido
+                    </a>
+                    <a href="{% url 'registrar_empacado' %}"
+                        class="submenu-item {% if 'empacado' in request.path %}active{% endif %}">
+                        <i class="fas fa-angle-right me-2"></i> Café Empacado
+                    </a>
+                </div>
                 {% if request.user.is_staff %}
                 <a href="/admin/">
                     <i class="fas fa-cog me-2"></i> Panel Admin
@@ -187,11 +212,36 @@
                     }
                 }
             });
+
+            // Abrir automáticamente el menú si estamos en una página de procesos
+            if (window.location.pathname.includes('/procesos/')) {
+                const submenu = document.getElementById('procesosSubmenu');
+                const chevron = document.querySelector('.proceso-chevron');
+                const dropdown = document.querySelector('.proceso-dropdown');
+
+                if (submenu && chevron && dropdown) {
+                    submenu.classList.add('show');
+                    chevron.classList.add('rotated');
+                    dropdown.classList.add('active');
+                }
+            }
         });
+
+        // Función para controlar el menú desplegable de procesos
+        function toggleProcesosMenu(e) {
+            e.preventDefault();
+            const submenu = document.getElementById('procesosSubmenu');
+            const chevron = document.querySelector('.proceso-chevron');
+            const dropdown = document.querySelector('.proceso-dropdown');
+
+            submenu.classList.toggle('show');
+            chevron.classList.toggle('rotated');
+            dropdown.classList.toggle('active');
+        }
+
     </script>
 
     {% block extra_js %}{% endblock %}
 </body>
 
 </html>
-

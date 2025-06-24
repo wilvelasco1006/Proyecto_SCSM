@@ -24,5 +24,6 @@ urlpatterns = [
     path('clientes/', include('apps.clientes.urls')),  # Rutas de la app clientes
     path('proveedores/', include('apps.proveedores.urls')),  # Rutas de la app proveedores
     path('cafe/', include('apps.cafe.urls')),  # Rutas de la app cafe
+    path('procesos/', include('apps.procesos.urls')),  # Rutas de la app procesos
     path('accounts/', include('django.contrib.auth.urls')),  # Rutas de autenticación
 ]

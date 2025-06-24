@@ -494,3 +494,86 @@ body > .container-fluid {
         margin-top: calc(var(--navbar-height) + 10px);
     }
 }
+/* Estilos para el menú de procesos */
+.proceso-dropdown {
+    position: relative;
+    padding-right: 40px;
+    color: var(--taza-blanco);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.proceso-dropdown:hover, .proceso-dropdown.active {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
+}
+/* Estilo para el menú desplegable cuando está activo */
+.proceso-dropdown.active {
+    background-color: rgba(74, 171, 135, 0.3);
+    color: white;
+    font-weight: 500;
+}
+
+/* Efecto de transición suave para el submenú */
+.procesos-submenu {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+    padding-left: 1rem;
+    background-color: rgba(0, 0, 0, 0.15);
+    display: block;
+}
+
+.procesos-submenu.show {
+    max-height: 500px; /* Valor alto para acomodar todos los elementos */
+}
+.proceso-chevron {
+    transition: transform 0.3s;
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.proceso-chevron.rotated {
+    transform: translateY(-50%) rotate(180deg);
+}
+
+
+.submenu-item {
+    padding: 0.5rem 1rem 0.5rem 1.5rem;
+    display: block;
+    color: #e0e0e0 !important;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: background-color 0.2s;
+}
+
+.submenu-item:hover, .submenu-item.active {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white !important;
+}
+
+/* Reduce el espacio entre los elementos del menú */
+.sidebar nav a {
+    margin-bottom: 0.2rem;
+}
+/* Añade estos estilos para elementos activos del menú principal */
+.sidebar nav a.active {
+    background-color: rgba(74, 171, 135, 0.3);
+    border-left: 4px solid var(--humo-cafe);
+    padding-left: 16px; /* Ajustado para compensar el borde */
+}
+
+.sidebar nav a.active:hover {
+    padding-left: 21px; /* Ajustado para mantener consistencia con hover */
+}
+
+/* Estilo mejorado para submenu activo */
+.submenu-item.active {
+    background-color: rgba(255, 255, 255, 0.15) !important;
+    border-left: 3px solid var(--humo-cafe);
+    padding-left: calc(1.5rem - 3px); /* Ajustar para mantener alineación */
+}

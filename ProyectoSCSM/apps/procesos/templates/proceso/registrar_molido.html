@@ -1,0 +1,222 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Registrar Café Molido</h2>
+
+    {% if messages %}
+    <div class="alert alert-success">
+        {% for message in messages %}
+        {{ message }}
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    {% if form.errors %}
+    <div class="alert alert-danger">
+        <ul>
+            {% for field in form %}
+            {% for error in field.errors %}
+            <li>{{ error }}</li>
+            {% endfor %}
+            {% endfor %}
+            {% for error in form.non_field_errors %}
+            <li>{{ error }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+
+    <form method="post" class="border p-4 rounded shadow-sm">
+        {% csrf_token %}
+        <!-- Primera fila: Fecha y Cantidad de baches -->
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="{{ form.fecha.id_for_label }}">Fecha:</label>
+                {{ form.fecha }}
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="{{ form.cantidad_baches.id_for_label }}">Cantidad de Baches:</label>
+                {{ form.cantidad_baches }}
+            </div>
+        </div>
+
+        <!-- Segunda fila: Responsable -->
+        <div class="row">
+            <div class="col-md-12 mb-3">
+                <label for="{{ form.responsable.id_for_label }}">Responsable:</label>
+                {{ form.responsable }}
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-md-12">
+                <button type="submit" class="btn btn-primary">Guardar</button>
+                <a href="{% url 'home' %}" class="btn btn-secondary">Cancelar</a>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!-- Separador visual -->
+<hr class="my-5" style="border-top: 2px solid var(--humo-cafe); opacity: 0.25;">
+
+<!-- Tabla de registros -->
+<div id="listado-molido" class="card mt-5 mb-4">
+    <div class="card-header d-flex justify-content-between align-items-center"
+        style="background-color: var(--taza-cafe); color: var(--taza-blanco);">
+        <h5 class="mb-0">Listado de Café Molido</h5>
+        <span class="badge bg-secondary">{{ molido.paginator.count }} resultados</span>
+    </div>
+    <div class="card-body">
+        <div class="card mb-4">
+            <div class="card-header" style="background-color: var(--taza-cafe); color: var(--taza-blanco);">
+                <h5>Buscar Registros</h5>
+            </div>
+            <div class="card-body">
+                <div class="col-md-6 mx-auto">
+                    <form method="get" class="d-flex" action="{% url 'registrar_molido' %}#listado-molido">
+                        <input type="text" name="search" class="form-control me-2"
+                            placeholder="Buscar por responsable o fecha..." value="{{ search_query }}">
+                        <button type="submit" class="btn btn-primary">Buscar</button>
+                        {% if search_query %}
+                        <a href="{% url 'registrar_molido' %}#listado-molido"
+                            class="btn btn-outline-secondary ms-2">Limpiar</a>
+                        {% endif %}
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        {% if molido %}
+        <div class="table-responsive">
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Baches</th>
+                        <th>Responsable</th>
+                        {% if es_administrador %}
+                        <th>Acciones</th>
+                        {% endif %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for m in molido %}
+                    <tr>
+                        <td>{{ m.fecha }}</td>
+                        <td>{{ m.cantidad_baches }}</td>
+                        <td>{{ m.responsable }}</td>
+                        {% if es_administrador %}
+                        <td>
+                            <a href="{% url 'editar_molido' m.id %}" class="btn btn-sm btn-warning">
+                                <i class="fas fa-edit"></i> Editar
+                            </a>
+                            <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal"
+                                data-bs-target="#eliminarModal{{ m.id }}">
+                                <i class="fas fa-trash"></i> Eliminar
+                            </button>
+
+                            <!-- Modal de confirmación para eliminar -->
+                            <div class="modal fade" id="eliminarModal{{ m.id }}" tabindex="-1" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header bg-danger text-white">
+                                            <h5 class="modal-title">Confirmar eliminación</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            ¿Está seguro que desea eliminar el registro de café molido del {{ m.fecha }}
+                                            por {{ m.responsable }}?
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-bs-dismiss="modal">Cancelar</button>
+                                            <form action="{% url 'eliminar_molido' m.id %}" method="post"
+                                                class="d-inline">
+                                                {% csrf_token %}
+                                                <button type="submit" class="btn btn-danger">Eliminar</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                        {% endif %}
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="alert alert-info" style="background-color: var(--humo-cafe); color: var(--taza-blanco);">
+            {% if search_query %}
+            No se encontraron registros que coincidan con "{{ search_query }}".
+            {% else %}
+            No hay registros de café molido.
+            {% endif %}
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Paginación -->
+{% if molido.has_other_pages %}
+<nav aria-label="Paginación">
+    <ul class="pagination justify-content-center">
+        {% if molido.has_previous %}
+        <li class="page-item">
+            <a class="page-link"
+                href="?page={{ molido.previous_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}#listado-molido">&laquo;
+                Anterior</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <span class="page-link">&laquo; Anterior</span>
+        </li>
+        {% endif %}
+
+        {% for i in molido.paginator.page_range %}
+        {% if molido.number == i %}
+        <!-- Página actual -->
+        <li class="page-item active">
+            <span class="page-link">{{ i }}</span>
+        </li>
+        {% elif i > molido.number|add:'-3' and i < molido.number|add:'3' %} <!-- Solo mostrar páginas cercanas a la
+            actual -->
+            <li class="page-item">
+                <a class="page-link"
+                    href="?page={{ i }}{% if search_query %}&search={{ search_query }}{% endif %}#listado-molido">{{ i
+                    }}</a>
+            </li>
+            {% elif i == 1 or i == molido.paginator.num_pages %}
+            <!-- Siempre mostrar primera y última página -->
+            <li class="page-item">
+                <a class="page-link"
+                    href="?page={{ i }}{% if search_query %}&search={{ search_query }}{% endif %}#listado-molido">{{ i
+                    }}</a>
+            </li>
+            {% elif i == molido.number|add:'-3' or i == molido.number|add:'3' %}
+            <!-- Puntos suspensivos para indicar páginas omitidas -->
+            <li class="page-item disabled">
+                <span class="page-link">...</span>
+            </li>
+            {% endif %}
+            {% endfor %}
+
+            {% if molido.has_next %}
+            <li class="page-item">
+                <a class="page-link"
+                    href="?page={{ molido.next_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}#listado-molido">Siguiente
+                    &raquo;</a>
+            </li>
+            {% else %}
+            <li class="page-item disabled">
+                <span class="page-link">Siguiente &raquo;</span>
+            </li>
+            {% endif %}
+    </ul>
+</nav>
+{% endif %}
+{% endblock %}
