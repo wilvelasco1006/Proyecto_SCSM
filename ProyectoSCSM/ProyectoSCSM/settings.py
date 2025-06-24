@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'apps.proveedores',
     'apps.cafe',
     'apps.procesos',  # Aplicación para procesos productivos
+    'apps.ventas',  # Aplicación para ventas
 
 ]
 

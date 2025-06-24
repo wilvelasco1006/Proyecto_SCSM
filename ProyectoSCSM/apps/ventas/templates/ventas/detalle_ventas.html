@@ -1,0 +1,67 @@
+:\Users\wilme\OneDrive\Escritorio - copia\ProyectoSCSM_django\ProyectoSCSM\apps\ventas\templates\venta\detalle_venta.html -->
+{% extends 'base/base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-header" style="background-color: var(--taza-cafe); color: var(--taza-blanco);">
+            <h3 class="mb-0">Detalle de Venta - Factura {{ venta.numero_factura }}</h3>
+        </div>
+        <div class="card-body">
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <h5>Información del Cliente</h5>
+                    <p><strong>Cliente:</strong> {{ venta.cliente.nombres }} {{ venta.cliente.apellidos }}</p>
+                    <p><strong>Cédula:</strong> {{ venta.cliente.cedula }}</p>
+                    <p><strong>Dirección:</strong> {{ venta.cliente.direccion }}</p>
+                    <p><strong>Contacto:</strong> {{ venta.cliente.num_contacto }}</p>
+                </div>
+                <div class="col-md-6">
+                    <h5>Información de la Venta</h5>
+                    <p><strong>Fecha:</strong> {{ venta.fecha }}</p>
+                    <p><strong>Responsable:</strong> {{ venta.responsable }}</p>
+                    <p><strong>Número de Factura:</strong> {{ venta.numero_factura }}</p>
+                    <p><strong>Estado:</strong> {{ venta.get_estado_display }}</p>
+                </div>
+            </div>
+            
+            <h5>Productos</h5>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Tipo de Café</th>
+                            <th>Cantidad</th>
+                            <th>Precio Unitario</th>
+                            <th>Subtotal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for detalle in detalles %}
+                        <tr>
+                            <td>{{ detalle.get_tipo_cafe_display }}</td>
+                            <td>{{ detalle.cantidad }}</td>
+                            <td>${{ detalle.precio_unitario|floatformat:0|stringformat:'s'|slice:':-3' }}.{{ detalle.precio_unitario|floatformat:0|stringformat:'s'|slice:'-3:' }}</td>
+                            <td>${{ detalle.subtotal|floatformat:0|stringformat:'s'|slice:':-3' }}.{{ detalle.subtotal|floatformat:0|stringformat:'s'|slice:'-3:' }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="3" class="text-end"><strong>Total:</strong></td>
+                            <td><strong>${{ venta.total|floatformat:0|stringformat:'s'|slice:':-3' }}.{{ venta.total|floatformat:0|stringformat:'s'|slice:'-3:' }}</strong></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            
+            <div class="mt-4 d-flex gap-2 justify-content-end">
+                <a href="{% url 'listar_ventas' %}" class="btn btn-secondary">Volver al Listado</a>
+                <a href="{% url 'generar_factura' venta.id %}" class="btn btn-primary">
+                    <i class="fas fa-file-pdf"></i> Generar Factura PDF
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
