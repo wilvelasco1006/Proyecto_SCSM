@@ -532,7 +532,7 @@ body > .container-fluid {
 .proceso-chevron {
     transition: transform 0.3s;
     position: absolute;
-    right: 20px;
+    right: 2px;
     top: 50%;
     transform: translateY(-50%);
 }

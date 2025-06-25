@@ -7,7 +7,7 @@
     {% if request.user.is_authenticated %}
     <!-- Home para usuarios autenticados -->
     <div class="welcome-banner mb-4">
-        <h3>Bienvenido a Salvajina Café</h3>
+        <h3>Bienvenido a Salvajina Café Software Manager</h3>
         <h4 class="mb-3">Hola, {{ user.username | upper }}</h4>
         <p class="lead">Accede rápidamente a las funcionalidades del sistema:</p>
     </div>
@@ -35,13 +35,49 @@
             </div>
         </div>
     </div>
+
+    <!-- Nueva fila con Procesos y Ventas -->
+    <div class="row g-4 mt-2">
+        <div class="col-md-4">
+            <div class="feature-card">
+                <h5>Procesos Productivos</h5>
+                <p>Gestiona los diferentes procesos de transformación del café.</p>
+                <div class="d-flex flex-column gap-2">
+                    <a href="{% url 'registrar_trillado' %}" class="btn btn-outline-primary btn-sm">Café Trillado</a>
+                    <a href="{% url 'registrar_tostado' %}" class="btn btn-outline-primary btn-sm">Café Tostado</a>
+                    <a href="{% url 'registrar_molido' %}" class="btn btn-outline-primary btn-sm">Café Molido</a>
+                    <a href="{% url 'registrar_empacado' %}" class="btn btn-outline-primary btn-sm">Café Empacado</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="feature-card">
+                <h5>Ventas</h5>
+                <p>Registra ventas y genera facturas para los clientes.</p>
+                <div class="d-flex gap-2">
+                    <a href="{% url 'registrar_venta' %}" class="btn btn-primary">Registrar</a>
+                    <a href="{% url 'listar_ventas' %}" class="btn btn-outline-primary">Ver Ventas</a>
+                </div>
+            </div>
+        </div>
+        {% if request.user.is_staff %}
+        <div class="col-md-4">
+            <div class="feature-card">
+                <h5>Administración</h5>
+                <p>Accede al panel de administración para gestionar usuarios y más.</p>
+                <a href="/admin/" class="btn btn-primary">Panel Admin</a>
+            </div>
+        </div>
+        {% endif %}
+    </div>
     {% else %}
     <!-- Home para usuarios no autenticados -->
     <div class="text-center my-5">
         <img src="{% static 'base/img/salvajina-cafe.jpg' %}" alt="Logo SCSM" class="img-fluid mb-4"
             style="max-height: 150px; border-radius: 10px;">
         <h1 class="display-5 mb-3">Salvajina Cafe Software Manager</h1>
-        <p class="lead mb-5">Bienvenido a SCSM, sistema de registro y seguimiento de procesos productivos de ASOMIPRAM.</p>
+        <p class="lead mb-5">Bienvenido a SCSM, sistema de registro y seguimiento de procesos productivos de ASOMIPRAM.
+        </p>
         <a href="{% url 'login' %}" class="btn btn-lg btn-primary">
             Ingresar al Sistema <i class="fas fa-sign-in-alt ms-2"></i>
         </a>

@@ -51,9 +51,18 @@ class DetalleVenta(models.Model):
         ('premium', 'Café Premium'),
     )
     
+    UNIDAD_MEDIDA_CHOICES = (
+        ('unidad', 'Unidad'),
+        ('libra', 'Libra'),
+        ('media_libra', 'Media Libra'),
+        ('cuarto_libra', 'Cuarto de Libra'),
+        ('kilo', 'Kilogramo'),
+    )
+    
     venta = models.ForeignKey(Venta, on_delete=models.CASCADE, related_name='detalles')
     tipo_cafe = models.CharField(max_length=20, choices=TIPO_CAFE_CHOICES)
     cantidad = models.PositiveIntegerField()
+    unidad_medida = models.CharField(max_length=20, choices=UNIDAD_MEDIDA_CHOICES, default='unidad')
     precio_unitario = models.DecimalField(max_digits=10, decimal_places=2)
     subtotal = models.DecimalField(max_digits=10, decimal_places=2, blank=True)
     
@@ -65,4 +74,4 @@ class DetalleVenta(models.Model):
         self.venta.actualizar_total()
     
     def __str__(self):
-        return f"{self.cantidad} unidad(es) de {self.get_tipo_cafe_display()}"
+        return f"{self.cantidad} {self.get_unidad_medida_display()} de {self.get_tipo_cafe_display()}"

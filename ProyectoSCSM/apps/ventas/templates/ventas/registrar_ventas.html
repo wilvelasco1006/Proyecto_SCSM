@@ -29,7 +29,7 @@
 
     <form method="post" id="form-venta" class="border p-4 rounded shadow-sm">
         {% csrf_token %}
-        
+
         <!-- Datos principales -->
         <div class="row">
             <div class="col-md-6 mb-3">
@@ -54,7 +54,7 @@
         </div>
 
         <h4 class="mt-4">Productos</h4>
-        
+
         <!-- Tabla de productos -->
         <div class="table-responsive">
             <table class="table table-bordered" id="tabla-productos">
@@ -62,6 +62,7 @@
                     <tr>
                         <th>Tipo de Café</th>
                         <th>Cantidad</th>
+                        <th>Unidad</th>
                         <th>Precio Unitario</th>
                         <th>Subtotal</th>
                         <th>Acciones</th>
@@ -72,6 +73,7 @@
                     <tr id="fila-principal">
                         <td>{{ form.tipo_cafe }}</td>
                         <td>{{ form.cantidad }}</td>
+                        <td>{{ form.unidad_medida }}</td>
                         <td>{{ form.precio_unitario }}</td>
                         <td><span class="subtotal">0</span></td>
                         <td>
@@ -83,7 +85,7 @@
                 </tbody>
                 <tfoot>
                     <tr>
-                        <td colspan="3" class="text-end"><strong>Total:</strong></td>
+                        <td colspan="4" class="text-end"><strong>Total:</strong></td>
                         <td id="total-venta">0</td>
                         <td>
                             <button type="button" id="agregar-producto" class="btn btn-sm btn-success">
@@ -106,49 +108,49 @@
 
 {% block extra_js %}
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         const formVenta = document.getElementById('form-venta');
         const tablaProductos = document.getElementById('tabla-productos');
         const btnAgregar = document.getElementById('agregar-producto');
         const clienteSelect = document.getElementById('id_cliente');
-        
+
         let contadorFilas = 0;
-        
+
         // Actualizar subtotales
         function actualizarSubtotales() {
             let total = 0;
-            document.querySelectorAll('#tabla-productos tbody tr').forEach(function(fila) {
+            document.querySelectorAll('#tabla-productos tbody tr').forEach(function (fila) {
                 const cantidad = parseInt(fila.querySelector('.cantidad').value) || 0;
                 const precio = parseFloat(fila.querySelector('.precio').value) || 0;
                 const subtotal = cantidad * precio;
-                
+
                 fila.querySelector('.subtotal').textContent = subtotal.toLocaleString('es-CO', {
                     style: 'currency',
                     currency: 'COP',
                     minimumFractionDigits: 0
                 });
-                
+
                 total += subtotal;
             });
-            
+
             document.getElementById('total-venta').textContent = total.toLocaleString('es-CO', {
                 style: 'currency',
                 currency: 'COP',
                 minimumFractionDigits: 0
             });
         }
-        
+
         // Calcular subtotales cuando cambian los valores
-        document.addEventListener('input', function(e) {
+        document.addEventListener('input', function (e) {
             if (e.target.classList.contains('cantidad') || e.target.classList.contains('precio')) {
                 actualizarSubtotales();
             }
         });
-        
+
         // Agregar nuevo producto
-        btnAgregar.addEventListener('click', function() {
+        btnAgregar.addEventListener('click', function () {
             contadorFilas++;
-            
+
             const nuevaFila = document.createElement('tr');
             nuevaFila.innerHTML = `
                 <td>
@@ -161,6 +163,15 @@
                     <input type="number" name="cantidad_${contadorFilas}" class="form-control cantidad" min="1" step="1" value="1">
                 </td>
                 <td>
+                    <select name="unidad_medida_${contadorFilas}" class="form-control unidad-medida">
+                        <option value="unidad">Unidad</option>
+                        <option value="libra">Libra</option>
+                        <option value="media_libra">Media Libra</option>
+                        <option value="cuarto_libra">Cuarto de Libra</option>
+                        <option value="kilo">Kilogramo</option>
+                    </select>
+                </td>
+                <td>
                     <input type="number" name="precio_unitario_${contadorFilas}" class="form-control precio" min="1000" step="100" value="1000">
                 </td>
                 <td><span class="subtotal">0</span></td>
@@ -170,19 +181,19 @@
                     </button>
                 </td>
             `;
-            
+
             tablaProductos.querySelector('tbody').appendChild(nuevaFila);
             actualizarSubtotales();
-            
+
             // Agregar evento para eliminar fila
-            nuevaFila.querySelector('.btn-eliminar').addEventListener('click', function() {
+            nuevaFila.querySelector('.btn-eliminar').addEventListener('click', function () {
                 nuevaFila.remove();
                 actualizarSubtotales();
             });
         });
-        
+
         // Cargar información del cliente al seleccionarlo
-        clienteSelect.addEventListener('change', function() {
+        clienteSelect.addEventListener('change', function () {
             const clienteId = this.value;
             if (clienteId) {
                 fetch(`/ventas/cliente-info/${clienteId}/`)
@@ -197,7 +208,7 @@
                 document.getElementById('id_direccion_cliente').value = '';
             }
         });
-        
+
         // Iniciar cálculos
         actualizarSubtotales();
     });

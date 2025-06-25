@@ -34,6 +34,7 @@ def registrar_venta(request):
                 venta=venta,
                 tipo_cafe=form.cleaned_data['tipo_cafe'],
                 cantidad=form.cleaned_data['cantidad'],
+                unidad_medida=form.cleaned_data['unidad_medida'],
                 precio_unitario=form.cleaned_data['precio_unitario']
             )
             detalle.save()
@@ -43,6 +44,7 @@ def registrar_venta(request):
             while f'tipo_cafe_{i}' in request.POST:
                 tipo_cafe = request.POST.get(f'tipo_cafe_{i}')
                 cantidad = request.POST.get(f'cantidad_{i}')
+                unidad_medida = request.POST.get(f'unidad_medida_{i}')
                 precio_unitario = request.POST.get(f'precio_unitario_{i}')
                 
                 if tipo_cafe and cantidad and precio_unitario:
@@ -50,6 +52,7 @@ def registrar_venta(request):
                         venta=venta,
                         tipo_cafe=tipo_cafe,
                         cantidad=int(cantidad),
+                        unidad_medida=unidad_medida,
                         precio_unitario=float(precio_unitario)
                     )
                     detalle.save()
@@ -113,14 +116,21 @@ def generar_factura(request, id):
     from weasyprint import HTML
     import tempfile
     from django.template.loader import render_to_string
+    from django.contrib.staticfiles.storage import staticfiles_storage
+    from django.conf import settings
+    import os
     
     venta = get_object_or_404(Venta, id=id)
     detalles = venta.detalles.all()
     
-    # Renderizar el HTML de la factura
+    # URL de Cloudinary (accesible desde cualquier lugar)
+    logo_url = "https://res.cloudinary.com/dijh9two4/image/upload/v1750818945/salvajina-cafe_iddxzj.jpg"
+    
+    # Renderizar el HTML
     html_string = render_to_string('facturas/facturas.html', {
         'venta': venta,
         'detalles': detalles,
+        'logo_url': logo_url,
     })
     
     # Crear un archivo temporal para guardar el PDF

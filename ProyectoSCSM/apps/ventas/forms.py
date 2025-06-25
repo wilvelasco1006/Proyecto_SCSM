@@ -58,6 +58,10 @@ class VentaConDetalleForm(forms.Form):
     cantidad = forms.IntegerField(
         widget=forms.NumberInput(attrs={'class': 'form-control cantidad', 'min': '1', 'step': '1'})
     )
+    unidad_medida = forms.ChoiceField(
+        choices=DetalleVenta.UNIDAD_MEDIDA_CHOICES,
+        widget=forms.Select(attrs={'class': 'form-control unidad-medida'})
+    )
     precio_unitario = forms.DecimalField(
         widget=forms.NumberInput(attrs={'class': 'form-control precio', 'min': '1000', 'step': '100'})
     )
