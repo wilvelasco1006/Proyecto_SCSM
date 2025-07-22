@@ -35,13 +35,4 @@ def register(request):
 
     return render(request, 'registration/register.html', data)  # Renderiza la plantilla de registro.
 
-def crear_superusuario(request):
-    clave = request.GET.get("clave")
-    if clave != "12345wilmer":
-        return HttpResponse("Acceso no autorizado.", status=403)
-    
-    User = get_user_model()
-    if not User.objects.filter(username="admin").exists():
-        User.objects.create_superuser("admin", "admin@example.com", "admin123")
-        return HttpResponse("Superusuario creado.")
-    return HttpResponse("Ya existe el superusuario.")
+
