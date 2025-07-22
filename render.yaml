@@ -3,7 +3,7 @@ services:
     name: salvajina-cafe
     env: python
     buildCommand: ./build.sh
-    startCommand: cd ProyectoSCSM && gunicorn ProyectoSCSM.wsgi:application
+    startCommand: cd ProyectoSCSM_django/ProyectoSCSM && gunicorn ProyectoSCSM.wsgi:application
     envVars:
       - key: DEBUG
         value: False

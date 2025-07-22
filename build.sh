@@ -6,8 +6,8 @@ apt-get install -y build-essential python3-dev python3-pip python3-setuptools py
 # Instala dependencias de Python
 pip install -r requirements.txt
 
-# Cambiar al directorio correcto
-cd ProyectoSCSM
+# Cambiar el directorio correcto
+cd ProyectoSCSM_django/ProyectoSCSM
 
 # Recoge archivos estáticos
 python manage.py collectstatic --noinput
