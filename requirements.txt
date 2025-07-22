@@ -29,3 +29,4 @@ sqlparse==0.5.1
 statsmodels==0.14.2
 threadpoolctl==3.5.0
 tzdata==2024.1
+whitenoise==6.9.0
