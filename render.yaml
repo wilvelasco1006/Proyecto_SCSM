@@ -13,11 +13,11 @@ services:
         value: 3.12.2
       - key: DATABASE_URL
         fromDatabase:
-          name: salvajina-db-demo
+          name: salvajina-db
           property: connectionString
 
 databases:
-  - name: salvajina-db-demo
+  - name: salvajina-db
     databaseName: db_scsm
     user: scsm_user
     plan: free
