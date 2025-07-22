@@ -7,5 +7,8 @@ apt-get install -y build-essential python3-dev python3-pip python3-setuptools py
 # Instala dependencias de Python
 pip install -r requirements.txt
 
-# Recoge archivos estáticos desde la raíz del proyecto
+# Aplica migraciones ya creadas (desde tu máquina local)
+python manage.py migrate
+
+# Recoge archivos estáticos
 python manage.py collectstatic --noinput
