@@ -3,6 +3,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout, authenticate, login
 from .forms import CustomUserCreationForm
 from django.contrib import messages
+from django.contrib.auth import get_user_model
+from django.http import HttpResponse
 
 def home(request):
     return render(request, 'base/home.html')  # Renderiza la plantilla de inicio
@@ -32,3 +34,14 @@ def register(request):
             return redirect('home')  # Redirige a la página de inicio
 
     return render(request, 'registration/register.html', data)  # Renderiza la plantilla de registro.
+
+def crear_superusuario(request):
+    clave = request.GET.get("clave")
+    if clave != "12345wilmer":
+        return HttpResponse("Acceso no autorizado.", status=403)
+    
+    User = get_user_model()
+    if not User.objects.filter(username="admin").exists():
+        User.objects.create_superuser("admin", "admin@example.com", "admin123")
+        return HttpResponse("Superusuario creado.")
+    return HttpResponse("Ya existe el superusuario.")
