@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: salvajina-cafe
+    env: python
+    buildCommand: ./build.sh
+    startCommand: gunicorn ProyectoSCSM.wsgi:application
+    envVars:
+      - key: DEBUG
+        value: False
+      - key: SECRET_KEY
+        generateValue: true
+      - key: PYTHON_VERSION
+        value: 3.12.2
+      - key: DATABASE_URL
+        fromDatabase:
+          name: salvajina-db-demo
+          property: connectionString
+
+databases:
+  - name: salvajina-db-demo
+    databaseName: db_scsm
+    user: scsm_user
+    plan: free

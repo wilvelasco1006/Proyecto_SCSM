@@ -12,7 +12,8 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 import sys
 from pathlib import Path
 import os
-
+import dj_database_url 
+from django.core.management.utils import get_random_secret_key 
 BASE_DIR = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(BASE_DIR / 'apps'))
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -24,12 +25,12 @@ sys.path.insert(0, str(BASE_DIR / 'apps'))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 # Configuración de seguridad
-SECRET_KEY = 'django-insecure-74%y^z%07(blzjnstez@f(1(x0(l=4a_p1)9276pba(ti8veot'
+SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-74%y^z%07(blzjnstez@f(1(x0(l=4a_p1)9276pba(ti8veot')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True  # No usar en producción
+DEBUG = os.environ.get('DEBUG', 'True') == 'True' 
 
-ALLOWED_HOSTS = [] # Aquí se especificarían los dominios permitidos
+ALLOWED_HOSTS = ['salvajona-cafe.onrender.com', 'localhost', '127.0.0.1'] # Aquí se especificarían los dominios permitidos
 
 
 # Application definition
@@ -105,7 +106,12 @@ DATABASES = {
         
     }
 }
+# Configuración de la base de datos para Render
+DATABASE_URL = os.environ.get('DATABASE_URL') # URL de la base de datos en Render
+if DATABASE_URL: # si la variable de entorno DATABASE_URL está definida,entonces se configura la base de datos
+    DATABASES['default'] = dj_database_url.config(default=DATABASE_URL, conn_max_age=600) 
 
+MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware') # Aqui se añade WhiteNoise para servir archivos estáticos en producción
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
@@ -147,6 +153,7 @@ STATICFILES_DIRS = [
     # Añade aquí otras carpetas static si es necesario
 ]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 # Tipo de campo de clave primaria por defecto
